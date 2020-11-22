@@ -52,6 +52,10 @@ type DashUserController struct{
 	beego.Controller
 }
 
+type PembuatController struct{
+	beego.Controller
+}
+
 func (c *MainController) Get() {
 	c.Data["Website"] = "beego.me"
 	c.Data["Email"] = "astaxie@gmail.com"
@@ -111,4 +115,9 @@ func (c *DashBackupController) Get() {
 func (c *DashUserController) Get() {
 	c.Data["message"] = "User"
 	c.TplName = "admin/dashuser.html"
+}
+
+func (c *PembuatController) Get() {
+	c.Data["message"] = "Pembuat"
+	c.TplName = "pembuat.html"
 }

@@ -18,4 +18,5 @@ func init() {
     beego.Router("/dashboard/cve", &controllers.DashCVEController{})
     beego.Router("/dashboard/backup", &controllers.DashBackupController{})
     beego.Router("/dashboard/user", &controllers.DashUserController{})
+    beego.Router("/pembuat", &controllers.PembuatController{})
 }
