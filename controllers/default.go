@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"iseng/models"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 )
 
 type MainController struct {
@@ -120,4 +122,64 @@ func (c *DashUserController) Get() {
 func (c *PembuatController) Get() {
 	c.Data["message"] = "Pembuat"
 	c.TplName = "pembuat.html"
+}
+
+type UserInfoController struct {
+	beego.Controller
+}
+
+// Modify
+
+func (c *UserInfoController) Edit() {
+	// Get id
+    id, _ := c.GetInt64("Id", 0)
+    userInfo, err := models.GetUserInfoById(id)
+    if err == nil {
+        c.Data["UserInfo"] = userInfo
+    } else {
+        tmpUserInfo := &models.User{}
+        c.Data["UserInfo"] = tmpUserInfo
+    }
+    c.TplName = "userInfo/edit.html"
+}
+
+// Delete
+//delete
+func (c *UserInfoController) Delete() {
+    // Get id
+    id, _ := c.GetInt64("Id", 0)
+    if err := models.DeleteUserInfo(id); err == nil {
+        c.Data["json"] = "ok"
+    } else {
+        c.Data["json"] = "error"
+    }
+    c.ServeJSON()
+}
+
+//save
+func (c *UserInfoController) Save() {
+    // Automatically resolve the binding to the object
+    userInfo := models.User{}
+    if err := c.ParseForm(&userInfo); err == nil {
+        if err := models.SaveUserInfoById(&userInfo); err == nil {
+            c.Data["json"] = ""
+        } else {
+            c.Data["json"] = "error"
+        }
+    } else {
+        c.Data["json"] = "error"
+    }
+    c.ServeJSON()
+}
+
+// Return all data
+func (c *UserInfoController) List() {
+
+    dataList, err := models.QueryAllUserInfo()
+    if err == nil {
+        c.Data["List"] = dataList
+    }
+    logs.Info("dataList :", dataList)
+    c.TplName = "dashuser.html"
+
 }

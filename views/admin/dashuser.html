@@ -85,7 +85,38 @@
 
             </nav>
 
-            <h2 id="postmortem">User</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Password</th>
+                  <th scope="col">Created At</th>
+                  <th scope="col">Updated At</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{range .List}}
+                <tr>
+                  <th scope="row">{{.Id}}</th>
+                  <td>{{.Username}}</td>
+                  <td>{{.Password}}</td>
+                  <td>{{.CreateTime}}</td>
+                  <td>{{.UpdateTime}}</td>
+                  <td>
+                    <div class="hidden-sm hidden-xs btn-group">
+                      <button class="btn btn-xs btn-info" onclick="showEditWindow('{{.Id}}');">
+                          <i class="ace-icon fa fa-pencil bigger-120"></i>
+                      </button>
+                      <button class="btn btn-xs btn-danger" onclick="deleteConfirm('{{.Id}}');">
+                          <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                {{end}}
+              </tbody>
+            </table>
 
         </div>
     </div>
